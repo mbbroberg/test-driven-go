@@ -2,22 +2,31 @@ package main
 
 import (
 	"fmt"
-  "io"
-  "os"
-  "image"
-  "image/png"
+	"image"
+	"image/png"
+	"io"
+	"os"
 )
 
-func GenerateQRCode(w io.Writer, code string) {
- 	img := image.NewNRGBA(image.Rect(0, 0, 21, 21))
-  _ = png.Encode(w, img)
- }
+var (
+	qrcode = "617-1234"
+)
+
+// Version is a parameter of all qrcodes that meet specific
+// size expectations
+type Version int8
+
+// GenerateQRCode creates a qrcode
+func GenerateQRCode(w io.Writer, code string, version Version) error {
+	img := image.NewNRGBA(image.Rect(0, 0, 21, 21))
+	return png.Encode(w, img)
+}
 
 func main() {
 	fmt.Println("Hello QR Code.")
 
-  file, _ := os.Create("qrcode.png")
-  defer file.Close()
+	file, _ := os.Create("qrcode.png")
+	defer file.Close()
 
-	GenerateQRCode(file, "617-1234")
+	GenerateQRCode(file, qrcode, Version(1))
 }
