@@ -16,9 +16,15 @@ var (
 // size expectations
 type Version int8
 
+// PatternSize calculates QR size based on specification
+func (v Version) PatternSize() int {
+	return 4*int(v) + 17
+}
+
 // GenerateQRCode creates a qrcode
 func GenerateQRCode(w io.Writer, code string, version Version) error {
-	img := image.NewNRGBA(image.Rect(0, 0, 21, 21))
+	size := version.PatternSize()
+	img := image.NewNRGBA(image.Rect(0, 0, size, size))
 	return png.Encode(w, img)
 }
 
