@@ -2,9 +2,9 @@ package main
 
 import (
 	"bytes"
+	"errors"
 	"image/png"
 	"testing"
-	"errors"
 )
 
 var (
@@ -13,7 +13,7 @@ var (
 
 func TestVersionDeterminesSize(t *testing.T) {
 	table := []struct {
-		version int
+		version  int
 		expected int
 	}{
 		{1, 21},
@@ -28,9 +28,9 @@ func TestVersionDeterminesSize(t *testing.T) {
 		if width := img.Bounds().Dx(); width != test.expected {
 			t.Errorf("Version %2d, expected %3d but got %3d",
 				test.version, test.expected, width)
-			}
 		}
 	}
+}
 
 func TestGenerateQRCodeGeneratesPNG(t *testing.T) {
 	buffer := new(bytes.Buffer)
